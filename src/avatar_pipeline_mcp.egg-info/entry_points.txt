@@ -1,0 +1,2 @@
+[console_scripts]
+avatar-pipeline-mcp = avatar_pipeline_mcp.__main__:main

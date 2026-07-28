@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/avatar_pipeline_mcp/__init__.py
+src/avatar_pipeline_mcp/__main__.py
+src/avatar_pipeline_mcp/fleet_http.py
+src/avatar_pipeline_mcp/server.py
+src/avatar_pipeline_mcp.egg-info/PKG-INFO
+src/avatar_pipeline_mcp.egg-info/SOURCES.txt
+src/avatar_pipeline_mcp.egg-info/dependency_links.txt
+src/avatar_pipeline_mcp.egg-info/entry_points.txt
+src/avatar_pipeline_mcp.egg-info/requires.txt
+src/avatar_pipeline_mcp.egg-info/top_level.txt
+tests/test_staging.py

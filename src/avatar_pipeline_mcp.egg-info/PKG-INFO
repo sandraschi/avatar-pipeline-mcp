@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: avatar-pipeline-mcp
+Version: 0.1.0
+Summary: VRM avatar creative pipeline — VRoid brute-force, Blender validate, VTube staging.
+Author: Sandra Schipal
+License: MIT
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: fastmcp<4,>=3.4.4
+Requires-Dist: httpx>=0.27
+Requires-Dist: starlette>=0.46
+Requires-Dist: uvicorn[standard]>=0.32
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.24; extra == "dev"
+Requires-Dist: ruff<0.17,>=0.16.0; extra == "dev"
+
+# DEPRECATED — use avatar-mcp
+
+The creative pipeline orchestrator lives in **[avatar-mcp](D:/Dev/repos/avatar-mcp)** as the `avatar_pipeline` portmanteau tool.
+
+- Webapp: `avatar-mcp/web_sota` → **Creative Pipeline** (`/pipeline`) on port **10792**
+- API: `avatar-mcp` HTTP **10793** → `POST /api/v1/tools/execute` or `/api/v1/control/tool`
+
+This repo is kept only as a reference stub. Do not run `avatar-pipeline-mcp` alongside avatar-mcp.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import shutil
@@ -21,6 +22,7 @@ from avatar_pipeline_mcp.fleet_http import (
     blender_reexport_vrm,
     blender_validate_vrm,
     call_vroid_tool,
+    download_fleet_file,
     stage_vrm_for_vts,
 )
 
@@ -174,8 +176,7 @@ class ToolCallBody(BaseModel):
     arguments: dict[str, Any] | None = None
 
 
-_mcp_http = mcp.http_app(path="/")
-app = FastAPI(title="avatar-pipeline-mcp", version="0.1.0", lifespan=_mcp_http.lifespan)
+app = FastAPI(title="avatar-pipeline-mcp", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -204,7 +205,7 @@ async def control_tool(body: ToolCallBody):
         return {"success": False, "error": str(exc)}
 
 
-app.mount("/mcp", _mcp_http)
+app.mount("/mcp", mcp.http_app(path="/"))
 
 
 def main() -> None:
