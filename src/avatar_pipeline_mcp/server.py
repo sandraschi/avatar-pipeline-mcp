@@ -1,7 +1,8 @@
-"""FastMCP server — avatar creative pipeline."""
+"""FastMCP server - avatar creative pipeline."""
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 import shutil
@@ -64,7 +65,7 @@ async def avatar_pipeline(
     skip_vroid: Annotated[bool, Field(description="full_pipeline: skip VRoid step if VRM exists.")] = False,
     label: Annotated[str, Field(description="Staging label for VTube.")] = "pipeline_avatar",
 ) -> dict[str, Any]:
-    """Avatar pipeline portmanteau — VRoid, Blender, VTube staging."""
+    """Avatar pipeline portmanteau - VRoid, Blender, VTube staging."""
     op = operation.strip().lower()
 
     if op == "status":
@@ -89,7 +90,7 @@ async def avatar_pipeline(
         export_path = result.get("export_path", "")
         if export_path and Path(export_path).is_file():
             dest = STAGING_DIR / vrm_filename
-            shutil.copy2(export_path, dest)
+            await asyncio.to_thread(shutil.copy2, export_path, dest)
             result["staged_path"] = str(dest)
         return result
 
@@ -100,7 +101,7 @@ async def avatar_pipeline(
         if not src.is_file():
             return {"success": False, "error": f"File not found: {source_path}"}
         dest = STAGING_DIR / (vrm_filename or src.name)
-        shutil.copy2(src, dest)
+        await asyncio.to_thread(shutil.copy2, src, dest)
         return {"success": True, "staged_path": str(dest), "size_kb": round(dest.stat().st_size / 1024, 1)}
 
     staged_vrm = STAGING_DIR / vrm_filename
@@ -138,7 +139,7 @@ async def avatar_pipeline(
                 return {"success": False, "steps": steps, "error": vroid.get("error")}
             export_path = vroid.get("export_path", "")
             if export_path:
-                shutil.copy2(export_path, target)
+                await asyncio.to_thread(shutil.copy2, export_path, target)
         else:
             steps.append({"step": "vroid_quick_avatar", "success": True, "skipped": True})
 
