@@ -177,7 +177,13 @@ class ToolCallBody(BaseModel):
 
 _mcp_http = mcp.http_app(path="/")
 app = FastAPI(title="avatar-pipeline-mcp", version="0.1.0", lifespan=_mcp_http.lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["tauri://localhost", "https://tauri.localhost"],
+    allow_origin_regex=r"https?://(?:localhost|127\.0\.0\.1)(?::\d+)?$",
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")
